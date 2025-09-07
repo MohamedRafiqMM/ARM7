@@ -106,3 +106,22 @@ VICVectAddr0 = (int)TAG_ISR;
 U0IER = 1;
 }
 
+/******************************************/
+
+void EXTINT_INTRE(void)
+{
+PINSEL0 |= 0xA0000000;
+VICIntSelect =0;
+VICVectCntl0 = 0x20 |15 ;
+VICVectAddr0 = (int)IN_ISR;
+
+VICVectCntl1 = 0x20 |16 ;
+VICVectAddr1 = (int)OUT_ISR;
+
+EXTMODE = 0x06;
+EXTPOLAR = 0x00;
+
+VICIntEnable = 1<<15 | 1<<16 ;
+
+
+}
